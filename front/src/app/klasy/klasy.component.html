@@ -1,0 +1,12 @@
+<div>
+  <ul>
+      <span *ngFor="let klasa of data">
+        <li>{{ klasa.klasa }}</li>
+        <li>
+            <ul *ngFor="let uczen of klasa.lista">
+            <li>{{ uczen.imie }} {{ uczen.nazwisko }}</li>
+            </ul>
+        </li>
+      </span>
+  </ul>
+</div>
