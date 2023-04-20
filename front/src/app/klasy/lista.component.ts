@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-klasy',
-  templateUrl: './klasy.component.html'
+  selector: 'app-lista',
+  templateUrl: './lista.component.html'
 })
-export class KlasyComponent implements OnInit{
+export class ListaComponent implements OnInit{
   constructor(private http : HttpClient){
   }
 

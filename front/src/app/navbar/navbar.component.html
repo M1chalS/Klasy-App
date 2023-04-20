@@ -1,0 +1,15 @@
+<mat-icon class="cursor-pointer z-10 p-6 scale-[200%] top-0 left-0 absolute" (click)="show = !show">menu</mat-icon>
+<nav *ngIf="show" class="text-4xl bg-yellow-200 dark:bg-gray-600 absolute py-[15%] left-0 top-0
+                         w-[20%] flex items-center flex-col h-full rounded-r-md">
+  <ul class="flex flex-col justify-evenly h-full">
+    <li>
+      <a routerLink="" routerLinkActive="active" (click)="show = !show">Strona główna</a>
+    </li>
+    <li>
+      <a routerLink="create" routerLinkActive="active" (click)="show = !show">Dodaj klasę</a>
+    </li>
+    <li>
+      <a routerLink="klasy" routerLinkActive="active" (click)="show = !show">Lista klas</a>
+    </li>
+  </ul>
+</nav>
