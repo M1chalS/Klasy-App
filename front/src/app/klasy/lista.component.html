@@ -1,22 +1,28 @@
 <div>
   <app-title>Przeglądarka klas</app-title>
-  <div class="flex flex-col mx-[20%] text-left h-[75vh]">
+  <div class="flex flex-col mx-[15%] text-center h-[75vh]">
     <div class="flex flex-row justify-evenly text-3xl">
-      <span>Numer klasy</span>
+      <span>Nazwa klasy</span>
       <span>Lista uczniów</span>
     </div>
     <div class="overflow-y-auto">
       <div *ngFor="let klasa of data" class="flex flex-row justify-evenly my-4">
-      <span class="text-2xl w-40 text-center">
+      <span class="text-2xl w-72 text-center">
         {{ klasa.klasa }}
       </span>
         <div class="flex flex-col m-4">
-          <dodaj-ucznia [id]="klasa._id"/>
-        <span *ngFor="let uczen of klasa.lista" class="w-40 my-2">
-          {{ uczen.imie }} {{ uczen.nazwisko }}
-        </span>
+          <dodaj-ucznia *ngIf="editMode" [id]="klasa._id" [refreshData]="refreshData"/>
+          <span *ngFor="let uczen of klasa.lista" class="m-2 w-72 flex flex-row justify-between">
+            <span>{{ uczen.imie }} {{ uczen.nazwisko }}</span>
+            <mat-icon *ngIf="editMode" class="cursor-pointer" (click)="deleteUczen(uczen._id)">close</mat-icon>
+          </span>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="absolute bottom-0 right-0 flex flex-row items-center">
+    <span>Naciśnij, aby włączyć tryb edycji:</span> <mat-icon class="m-4 font-4xl cursor-pointer" (click)="editMode = !editMode">edit</mat-icon>
+  </div>
+
 </div>

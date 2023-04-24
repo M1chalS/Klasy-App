@@ -11,19 +11,24 @@ export class ListaComponent implements OnInit{
 
   data: any = [];
 
-  dodajUcznia(id: string): void {
-    this.http.post(`http://localhost:4000/klasy/uczen/${id}`, {}).subscribe((res) => {
+  editMode = false;
 
-    });
-  }
-
-  ngOnInit(): void {
+  refreshData = () => {
     this.http.get('http://localhost:4000/klasy').subscribe((response) => {
-      console.log(response);
       if(response) {
         this.data = response;
       }
     });
+  };
+
+  deleteUczen = (id: string) => {
+    this.http.delete(`http://localhost:4000/klasy/uczen/${id}`).subscribe((res) => {
+      this.refreshData();
+    });
+  }
+
+  ngOnInit(): void {
+    this.refreshData();
   }
 }
 

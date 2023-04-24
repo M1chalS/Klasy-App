@@ -1,5 +1,5 @@
 import express from 'express';
-import mongo from 'mongodb';
+import mongo, {ObjectId} from 'mongodb';
 import cors from "cors";
 import bodyParser from "body-parser";
 const app = express();
@@ -50,6 +50,38 @@ app.post("/klasy", async (req, res) => {
 
     return res.send({ klasa });
 });
+
+app.post("/klasy/uczen/:id", async (req, res) => {
+    const id = req.params.id;
+
+    const { imie, nazwisko } = req.body;
+
+    if(!imie || !nazwisko) {
+        return res.send({error: "Wpisz imię i nazwisko ucznia"});
+    }
+
+    const uczen = await uczniowie.insertOne({
+        imie: imie,
+        nazwisko: nazwisko,
+        klasa_id: new ObjectId(id)
+    });
+
+    res.send({ uczen });
+});
+
+app.delete("/klasy/uczen/:id", async (req, res) => {
+    const id = req.params.id;
+
+    if(!id) {
+        return res.send({error: "Złe parametry zapytania"});
+    }
+
+    const uczen = await uczniowie.deleteOne({
+        _id: new ObjectId(id)
+    });
+
+    res.send({ uczen });
+})
 
 app.listen(4000, () => {
     console.log('Listening on port 4000');
