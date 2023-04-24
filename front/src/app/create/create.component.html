@@ -1,11 +1,16 @@
 <div>
   <app-title>Stwórz nową klasę</app-title>
-  <form class="flex flex-col mx-[25%]">
+  <form class="flex flex-col mx-[25%]" (submit)="createKlasa()">
     <label for="name" class="text-2xl mt-4">Nazwa klasy: </label>
-    <input type="text" id="name" class="rounded-md text-2xl my-2 text-gray-700 px-2">
+    <input [(ngModel)]="klasaName" id="name" name="name"
+           class="rounded-md text-2xl my-2 text-gray-700 px-2"/>
+    <span *ngIf="loading">Dodawanie klasy do bazy...</span>
+    <span *ngIf="success">Dodano klasę do bazy!</span>
+    <span *ngIf="error" class="text-red-600">{{ error }}</span>
     <button type="submit" class="mt-2 bg-blue-600 text-gray-200 rounded-md hover:bg-gray-200
                                  hover:text-blue-600 hover:border-blue-600 hover:border-2 mx-[15%]">
       Stwórz nową klasę
     </button>
+
   </form>
 </div>

@@ -10,6 +10,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatIconModule } from "@angular/material/icon";
 import { CreateComponent } from './create/create.component';
 import { TitleComponent } from './title/title.component';
+import { FormsModule } from "@angular/forms";
+import { DodajUczniaComponent } from "./klasy/dodaj-ucznia.component";
 
 @NgModule({
   declarations: [
@@ -19,13 +21,16 @@ import { TitleComponent } from './title/title.component';
     NavbarComponent,
     CreateComponent,
     TitleComponent,
+    ListaComponent,
+    DodajUczniaComponent
   ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    MatIconModule
-  ],
+    imports: [
+        FormsModule,
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        MatIconModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

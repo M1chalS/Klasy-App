@@ -1,13 +1,22 @@
 <div>
   <app-title>Przeglądarka klas</app-title>
-  <ul class="flex flex-col items-center">
-      <span *ngFor="let klasa of data">
-        <li>{{ klasa.klasa }}</li>
-        <li>
-            <ul *ngFor="let uczen of klasa.lista">
-            <li>{{ uczen.imie }} {{ uczen.nazwisko }}</li>
-            </ul>
-        </li>
+  <div class="flex flex-col mx-[20%] text-left h-[75vh]">
+    <div class="flex flex-row justify-evenly text-3xl">
+      <span>Numer klasy</span>
+      <span>Lista uczniów</span>
+    </div>
+    <div class="overflow-y-auto">
+      <div *ngFor="let klasa of data" class="flex flex-row justify-evenly my-4">
+      <span class="text-2xl w-40 text-center">
+        {{ klasa.klasa }}
       </span>
-  </ul>
+        <div class="flex flex-col m-4">
+          <dodaj-ucznia [id]="klasa._id"/>
+        <span *ngFor="let uczen of klasa.lista" class="w-40 my-2">
+          {{ uczen.imie }} {{ uczen.nazwisko }}
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

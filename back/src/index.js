@@ -1,9 +1,11 @@
 import express from 'express';
 import mongo from 'mongodb';
 import cors from "cors";
+import bodyParser from "body-parser";
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 const url = 'mongodb://127.0.0.1:27017';
 const client = new mongo.MongoClient(url);
@@ -33,6 +35,20 @@ app.get('/klasy', async (req, res) => {
         console.log(e.message);
         res.status(404);
     }
+});
+
+app.post("/klasy", async (req, res) => {
+    const { name } = req.body;
+
+    if(!name) {
+        return res.send({error: "Wpisz nazwę klasy"});
+    }
+
+    const klasa = await klasy.insertOne({
+       klasa: name
+    });
+
+    return res.send({ klasa });
 });
 
 app.listen(4000, () => {

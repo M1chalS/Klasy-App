@@ -11,6 +11,12 @@ export class ListaComponent implements OnInit{
 
   data: any = [];
 
+  dodajUcznia(id: string): void {
+    this.http.post(`http://localhost:4000/klasy/uczen/${id}`, {}).subscribe((res) => {
+
+    });
+  }
+
   ngOnInit(): void {
     this.http.get('http://localhost:4000/klasy').subscribe((response) => {
       console.log(response);
