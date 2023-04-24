@@ -27,6 +27,12 @@ export class ListaComponent implements OnInit{
     });
   }
 
+  deleteKlasa = (id: string) => {
+    this.http.delete(`http://localhost:4000/klasy/${id}`).subscribe((res) => {
+      this.refreshData();
+    });
+  }
+
   ngOnInit(): void {
     this.refreshData();
   }

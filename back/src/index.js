@@ -83,6 +83,24 @@ app.delete("/klasy/uczen/:id", async (req, res) => {
     res.send({ uczen });
 })
 
+app.delete("/klasy/:id", async (req, res) => {
+    const id = req.params.id;
+
+    if(!id) {
+        return res.send({error: "Złe parametry zapytania"});
+    }
+
+    const klasa = await klasy.deleteOne({
+        _id: new ObjectId(id)
+    });
+
+    await uczniowie.deleteMany({
+        klasa_id: new ObjectId(id)
+    });
+
+    res.send({ klasa });
+});
+
 app.listen(4000, () => {
     console.log('Listening on port 4000');
 });
