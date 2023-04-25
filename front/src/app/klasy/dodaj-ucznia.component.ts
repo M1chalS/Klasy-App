@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'dodaj-ucznia',
-  template: '<form class="flex flex-row" (submit)="dodajUcznia()">\n' +
+  template: '<form class="flex flex-row justify-center items-center ml-4" (submit)="dodajUcznia()">\n' +
     '            <input [(ngModel)]="imie" name="imie" placeholder="Imie" class="rounded-md w-36 p-2 text-gray-900 mx-2"/>\n' +
     '            <input [(ngModel)]="nazwisko" name="nazwisko" placeholder="Nazwisko" class="rounded-md w-36 p-2 text-gray-900"/>\n' +
     '            <button type="submit">\n' +

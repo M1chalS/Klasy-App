@@ -101,6 +101,47 @@ app.delete("/klasy/:id", async (req, res) => {
     res.send({ klasa });
 });
 
+app.put("/klasy/:id", async (req, res) => {
+    const id = req.params.id;
+
+    const { name } = req.body;
+
+    if(!name) {
+        return res.send({error: "Wpisz imię i nazwisko ucznia"});
+    }
+
+    const klasa = await klasy.updateOne({
+        _id: new ObjectId(id)
+    }, {
+        $set: {
+            klasa: name
+        }
+    });
+
+    res.send({ klasa });
+});
+
+app.put("/klasy/uczen/:id", async (req, res) => {
+    const id = req.params.id;
+
+    const { imie, nazwisko } = req.body;
+
+    if(!imie || !nazwisko) {
+        return res.send({error: "Wpisz imię i nazwisko ucznia"});
+    }
+
+    const uczen = await uczniowie.updateOne({
+        _id: new ObjectId(id)
+    }, {
+        $set: {
+            imie: imie,
+            nazwisko: nazwisko
+        }
+    });
+
+    res.send({ uczen });
+});
+
 app.listen(4000, () => {
     console.log('Listening on port 4000');
 });

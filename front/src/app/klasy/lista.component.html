@@ -1,22 +1,29 @@
 <div>
   <app-title>Przeglądarka klas</app-title>
   <div class="flex flex-col mx-[15%] h-[75vh]">
-    <div class="flex flex-row justify-evenly text-3xl">
+    <div class="flex flex-row justify-between text-3xl mx-[10%]">
       <span>Nazwa klasy</span>
       <span>Lista uczniów</span>
     </div>
     <div class="overflow-y-auto">
-      <div *ngFor="let klasa of data" class="flex flex-row justify-evenly items-center my-4">
-      <span class="text-2xl w-72 flex flex-row items-center justify-center">
-        <span>{{ klasa.klasa }}</span>
-        <mat-icon *ngIf="editMode" class="cursor-pointer ml-2" (click)="deleteKlasa(klasa._id)">delete</mat-icon>
-      </span>
-        <div class="flex flex-col m-4">
-          <dodaj-ucznia *ngIf="editMode" [id]="klasa._id" [refreshData]="refreshData"/>
-          <span *ngFor="let uczen of klasa.lista" class="m-2 w-72 flex flex-row justify-center items-center">
-            <span>{{ uczen.imie }} {{ uczen.nazwisko }}</span>
-            <mat-icon *ngIf="editMode" class="cursor-pointer ml-2" (click)="deleteUczen(uczen._id)">delete</mat-icon>
-          </span>
+      <div *ngFor="let klasa of data" class="flex flex-row justify-between my-6 mx-[7%]">
+          <div class="flex flex-row items-start ml-[8%]">
+            <span *ngIf="!editMode">{{ klasa.klasa }}</span>
+            <div class="flex flex-row justify-center items-center">
+              <edytuj-klase *ngIf="editMode" [id]="klasa._id" [name]="klasa.klasa" [refreshData]="refreshData"/>
+              <mat-icon *ngIf="editMode" class="cursor-pointer ml-2" (click)="deleteKlasa(klasa._id)">delete</mat-icon>
+            </div>
+          </div>
+          <div class="flex flex-col items-end">
+            <dodaj-ucznia *ngIf="editMode" [id]="klasa._id" [refreshData]="refreshData"/>
+            <div *ngFor="let uczen of klasa.lista" class="m-2 w-92 flex flex-row justify-center items-center">
+              <span *ngIf="!editMode">{{ uczen.imie }} {{ uczen.nazwisko }}</span>
+              <div *ngIf="editMode" class="flex flex-row justify-center items-center">
+                <edytuj-ucznia [id]="uczen._id" [imie]="uczen.imie"
+                               [nazwisko]="uczen.nazwisko" [refreshData]="refreshData"/>
+                <mat-icon class="cursor-pointer ml-2" (click)="deleteUczen(uczen._id)">delete</mat-icon>
+              </div>
+            </div>
         </div>
       </div>
     </div>

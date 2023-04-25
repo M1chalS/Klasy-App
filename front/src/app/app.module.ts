@@ -12,6 +12,8 @@ import { CreateComponent } from './create/create.component';
 import { TitleComponent } from './title/title.component';
 import { FormsModule } from "@angular/forms";
 import { DodajUczniaComponent } from "./klasy/dodaj-ucznia.component";
+import {EdytujKlaseComponent} from "./klasy/edytuj-klase.component";
+import {EdytujUczniaComponent} from "./klasy/edytuj-ucznia.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { DodajUczniaComponent } from "./klasy/dodaj-ucznia.component";
     CreateComponent,
     TitleComponent,
     ListaComponent,
-    DodajUczniaComponent
+    DodajUczniaComponent,
+    EdytujKlaseComponent,
+    EdytujUczniaComponent
   ],
     imports: [
         FormsModule,
