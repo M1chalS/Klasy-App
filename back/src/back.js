@@ -37,8 +37,6 @@ app.get('/klasy', async (req, res) => {
             return res.send(data);
         }
 
-        console.log(klasa);
-
         const data = await klasy.aggregate([
             {
                 $lookup: {
@@ -53,8 +51,6 @@ app.get('/klasy', async (req, res) => {
         const finalData = data.filter((item) => {
             return item.klasa === klasa ? 1 : 0;
         });
-
-        console.log(finalData);
 
         return res.send(finalData);
     } catch (e) {
