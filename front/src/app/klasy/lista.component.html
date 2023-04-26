@@ -1,20 +1,23 @@
 <div>
   <app-title>Przeglądarka klas</app-title>
-  <div class="flex flex-col mx-[15%] h-[75vh]">
-    <div class="flex flex-row justify-between text-3xl mx-[10%]">
+  <div class="grid grid-cols-2 mx-[15%] h-[75vh]">
+    <input type="text" name="search" placeholder="Wyszukaj klasę" [(ngModel)]="searchValue"
+           class="rounded p-2 w-1/2 h-12 ml-24 text-gray-900 mb-4" (change)="search()"/>
+    <div class="flex flex-row justify-between text-3xl mx-[10%] col-span-2">
       <span>Nazwa klasy</span>
       <span>Lista uczniów</span>
     </div>
-    <div class="overflow-y-auto">
-      <div *ngFor="let klasa of data" class="flex flex-row justify-between my-6 mx-[7%]">
+    <div class="overflow-y-auto col-span-2">
+      <div *ngFor="let klasa of data" class="grid grid-cols-3 mx-[8%]">
+        <hr class="col-span-3 my-4"/>
           <div class="flex flex-row items-start ml-[8%]">
-            <span *ngIf="!editMode">{{ klasa.klasa }}</span>
+            <span *ngIf="!editMode" class="self-center text-2xl">{{ klasa.klasa }}</span>
             <div class="flex flex-row justify-center items-center">
               <edytuj-klase *ngIf="editMode" [id]="klasa._id" [name]="klasa.klasa" [refreshData]="refreshData"/>
               <mat-icon *ngIf="editMode" class="cursor-pointer ml-2" (click)="deleteKlasa(klasa._id)">delete</mat-icon>
             </div>
           </div>
-          <div class="flex flex-col items-end">
+          <div class="flex flex-col items-end col-span-2">
             <dodaj-ucznia *ngIf="editMode" [id]="klasa._id" [refreshData]="refreshData"/>
             <div *ngFor="let uczen of klasa.lista" class="m-2 w-92 flex flex-row justify-center items-center">
               <span *ngIf="!editMode">{{ uczen.imie }} {{ uczen.nazwisko }}</span>
@@ -27,6 +30,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="absolute bottom-0 right-0 flex flex-row items-center">

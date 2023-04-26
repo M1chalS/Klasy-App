@@ -10,10 +10,24 @@ export class ListaComponent implements OnInit{
   }
 
   data: any = [];
+  searchValue: string = '';
 
   editMode = false;
 
+  search = () => {
+    this.http.get(`http://localhost:4000/klasy?klasa=${this.searchValue}`).subscribe((response) => {
+      console.log(response);
+      if(response) {
+        this.data = response;
+      }
+    });
+  }
+
   refreshData = () => {
+    if(this.searchValue) {
+      return this.search();
+    }
+
     this.http.get('http://localhost:4000/klasy').subscribe((response) => {
       if(response) {
         this.data = response;

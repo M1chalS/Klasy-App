@@ -2,6 +2,7 @@ import express from 'express';
 import mongo, {ObjectId} from 'mongodb';
 import cors from "cors";
 import bodyParser from "body-parser";
+
 const app = express();
 
 app.use(cors());
@@ -20,43 +21,68 @@ const uczniowie = db.collection('uczniowie');
 
 app.get('/klasy', async (req, res) => {
     try {
-        const data = await klasy.aggregate([ {
-            $lookup: {
-                from: "uczniowie",
-                localField: "_id",
-                foreignField: "klasa_id",
-                as: "lista"
+        const {klasa} = req.query;
+
+        if (!klasa) {
+            const data = await klasy.aggregate([{
+                $lookup: {
+                    from: "uczniowie",
+                    localField: "_id",
+                    foreignField: "klasa_id",
+                    as: "lista",
+                }
             },
-        },
+            ]).toArray();
+
+            return res.send(data);
+        }
+
+        console.log(klasa);
+
+        const data = await klasy.aggregate([
+            {
+                $lookup: {
+                    from: "uczniowie",
+                    localField: "_id",
+                    foreignField: "klasa_id",
+                    as: "lista"
+                }
+            },
         ]).toArray();
 
-        res.send(data);
+        const finalData = data.filter((item) => {
+            return item.klasa === klasa ? 1 : 0;
+        });
+
+        console.log(finalData);
+
+        return res.send(finalData);
     } catch (e) {
         console.log(e.message);
-        res.status(404);
+        return res.status(404);
     }
 });
 
 app.post("/klasy", async (req, res) => {
-    const { name } = req.body;
+    const {name} = req.body;
 
-    if(!name) {
+    if (!name) {
         return res.send({error: "Wpisz nazwę klasy"});
     }
 
     const klasa = await klasy.insertOne({
-       klasa: name
+        klasa: name
     });
 
-    return res.send({ klasa });
+    return res.send({klasa});
 });
 
 app.post("/klasy/uczen/:id", async (req, res) => {
     const id = req.params.id;
 
-    const { imie, nazwisko } = req.body;
+    const {imie, nazwisko} = req.body;
 
-    if(!imie || !nazwisko) {
+    if (!imie || !nazwisko) {
         return res.send({error: "Wpisz imię i nazwisko ucznia"});
     }
 
@@ -66,13 +92,13 @@ app.post("/klasy/uczen/:id", async (req, res) => {
         klasa_id: new ObjectId(id)
     });
 
-    res.send({ uczen });
+    res.send({uczen});
 });
 
 app.delete("/klasy/uczen/:id", async (req, res) => {
     const id = req.params.id;
 
-    if(!id) {
+    if (!id) {
         return res.send({error: "Złe parametry zapytania"});
     }
 
@@ -80,13 +106,13 @@ app.delete("/klasy/uczen/:id", async (req, res) => {
         _id: new ObjectId(id)
     });
 
-    res.send({ uczen });
+    res.send({uczen});
 })
 
 app.delete("/klasy/:id", async (req, res) => {
     const id = req.params.id;
 
-    if(!id) {
+    if (!id) {
         return res.send({error: "Złe parametry zapytania"});
     }
 
@@ -98,15 +124,15 @@ app.delete("/klasy/:id", async (req, res) => {
         klasa_id: new ObjectId(id)
     });
 
-    res.send({ klasa });
+    res.send({klasa});
 });
 
 app.put("/klasy/:id", async (req, res) => {
     const id = req.params.id;
 
-    const { name } = req.body;
+    const {name} = req.body;
 
-    if(!name) {
+    if (!name) {
         return res.send({error: "Wpisz imię i nazwisko ucznia"});
     }
 
@@ -118,15 +144,15 @@ app.put("/klasy/:id", async (req, res) => {
         }
     });
 
-    res.send({ klasa });
+    res.send({klasa});
 });
 
 app.put("/klasy/uczen/:id", async (req, res) => {
     const id = req.params.id;
 
-    const { imie, nazwisko } = req.body;
+    const {imie, nazwisko} = req.body;
 
-    if(!imie || !nazwisko) {
+    if (!imie || !nazwisko) {
         return res.send({error: "Wpisz imię i nazwisko ucznia"});
     }
 
@@ -139,7 +165,7 @@ app.put("/klasy/uczen/:id", async (req, res) => {
         }
     });
 
-    res.send({ uczen });
+    res.send({uczen});
 });
 
 app.listen(4000, () => {
